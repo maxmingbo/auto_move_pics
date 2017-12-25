@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Dec 25 22:51:07 2017
+
+@author: zmb
+"""
+
+import shutil
+import os
+
+root_dir = r'D:/load_pics'
+
+list_dir = []
+#根目录
+
+LEN_FILE = 500
+#文件夹下文件限制数
+
+try:
+    list_dir = os.listdir(root_dir)
+except:
+    print(u'输入路径不存在!')
+    
+def move_pic(abc_dir):
+    abc_dir_pic_nubs = len(os.listdir(abc_dir))
+    if abc_dir_pic_nubs > LEN_FILE:
+        print ' ' ,abc_dir_pic_nubs
+        pic_list = os.listdir(abc_dir)
+        
+        for loop in range(len(pic_list)/LEN_FILE + 1):
+            print(loop)
+            
+            if os.path.exists(abc_dir+'\\'+str(loop))!=True:
+                os.makedirs(abc_dir+'\\'+str(loop))
+            
+            for pic_i in pic_list[loop*LEN_FILE: (loop+1)*LEN_FILE]:
+                
+                src = os.path.join(abc_dir,pic_i)
+                dst = os.path.join(abc_dir,'%d\\%s'%(loop,pic_i))
+                if os.path.isfile(src):
+                    shutil.move(src, dst)
+    
+for dir_abc in list_dir:
+    absdir = os.path.join(root_dir,dir_abc)
+    if os.path.isdir(absdir):
+        print(absdir)
+        move_pic(absdir)
+        
+
+    
+
+
